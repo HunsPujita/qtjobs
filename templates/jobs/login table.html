@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Table</title>
+</head>
+<style>
+    table {
+  width: 100%;
+
+}
+
+th {
+  height: 20px;
+  padding: 15px;
+  text-align: center;
+  background-color: #e6e6e6;
+}
+td {
+  height: 20px;
+  padding: 15px;
+  text-align: center;
+  background-color:  #f2f2f2;
+}
+
+</style>
+<body>
+<table border="1">
+    <tr><th>UserID</th>
+        <th>Password</th>
+    {% for i in form %}
+    <tr>
+        <td>{{i.UserID_id}}</td>
+        <td>{{i.Password}}</td>
+    </tr>
+        {% endfor %}
+</table>
+</body>
+</html>
