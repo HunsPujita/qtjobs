@@ -15,8 +15,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.conf import settings
 from jobs import views
-from django.conf.urls import url
+from django.conf.urls.static import static
 
 
 urlpatterns = [
@@ -33,8 +34,10 @@ urlpatterns = [
     path('registerform/', views.reg),
     path('loginform/', views.log),
     path('resumeform/', views.res),
-    path('credform/', views.cred),
     path('registertable/', views.reg_table),
     path('resumetable/', views.res_table),
     path('logintable/', views.log_table),
+    path('upload', views.upload)
 ]
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,9 +1,12 @@
+from django.core.files.storage import FileSystemStorage
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from jobs.forms import RegisterForm, LoginForm, ResumeForm, CredForm
 from jobs.models import *
 import json
+from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
+
 
 """json"""
 
@@ -80,25 +83,6 @@ def res(request):
     return render(request, "resume.html", {'form': form})
 
 
-def cred(request):
-    if request.method == "POST":
-        form = CredForm(request=request, data=request.POST)
-        if form.is_valid():
-            UserID = form.cleaned_data.get('UserID')
-            Password = form.cleaned_data.get('Password')
-            user = authenticate(UserID=UserID, Password=Password)
-            if user is None:
-                return HttpResponse("Invalid User ID")
-            else:
-                if loginobj.Password == Password:
-                    return HttpResponse("Success")
-                else:
-                    return HttpResponse("Invalid credentials")
-    else:
-        form = CredForm()
-    return render(request, "login.html", {'form': form})
-
-
 """tables"""
 
 
@@ -173,3 +157,14 @@ def resume(request):
         users.save()
     return HttpResponse('uploaded')
 
+
+def upload(request):
+    if request.method == 'POST' and request.FILES['myfile']:
+        myfile = request.FILES['myfile']
+        fs = FileSystemStorage()
+        filename = fs.save(myfile.name, myfile)
+        upload_file = fs.url(filename)
+        return render(request, 'file upload.html', {
+            'upload': upload_file
+        })
+    return render(request, 'file upload.html')

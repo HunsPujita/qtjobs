@@ -8,8 +8,21 @@
 <body>
 <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
-    <input type="file" name="myfile">
+    <input type="file" id="file" name="myfile" accept=".pdf,.docx" />
     <button type="submit">Upload</button>
 </form>
+  {% if upload %}
+    <p>File uploaded at: <a href="{{ upload }}">{{ upload }}</a></p>
+  {% endif %}
 </body>
+<script>
+    var uploadField = document.getElementById("file");
+
+uploadField.onchange = function() {
+    if(this.files[0].size > 2097152){
+       alert("File size should be less than 2MB, try again");
+       this.value = "";
+    };
+};
+</script>
 </html>
