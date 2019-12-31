@@ -1,0 +1,167 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" xmlns:text-align="http://www.w3.org/1999/xhtml">
+<head>
+<title>Layout</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+/* Style the header */
+.header {
+  background-color: white;
+  padding: 10px;
+  text-align: center;
+}
+
+/* Style the top navigation bar */
+.topnav {
+  overflow: hidden;
+  background-color: #4d79ff;
+}
+
+/* Style the topnav links */
+.topnav a {
+  float: left;
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+/* Change color on hover */
+.topnav a:hover {
+  background-color: #b3c6ff;
+  color: black;
+}
+
+/* Create three unequal columns that floats next to each other */
+.column {
+  float: left;
+  padding: 10px;
+}
+
+/* Left and right column */
+.column.side {
+  width: 25%;
+}
+
+/* Middle column */
+.column.middle {
+  width: 75%;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Responsive layout - makes the three columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 600px) {
+  .column.side, .column.middle {
+    width: 100%;
+  }
+}
+.buttonlink {
+  background-color: white;
+  border: none;
+  color: #4d79ff;
+  padding: 10px 10px;
+  float: right;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 15px;
+  cursor: pointer;
+}
+/* profile image */
+#imageUpload
+{
+    display: none;
+}
+
+#profileImage
+{
+    cursor: pointer;
+}
+
+#profile-container {
+    width: 50px;
+    height: 50px;
+    float:right;
+    overflow: hidden;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+    border-radius: 50%;
+}
+
+#profile-container img {
+    width: 100px;
+    height: 100px;
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+     <a href="#" class="buttonlink"><b>Sign Out?</b></a>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<div id="profile-container">
+   <image id="profileImage" src="https://panolam.com/wp-content/uploads/2017/09/S3048-PATRIOT-BLUE.jpg"></image>
+</div>
+<input id="imageUpload" type="file"
+       name="profile_photo" placeholder="Photo" required="" capture>
+    <img src="{% static "jobs\logo.jpg" %}" alt="My image" height="80px" width="200px" align="left"/>
+    <p style= 'font-family:"Lucida Console", Monaco, monospace'><font color="#00ace6" size="10px">Q</font><font color="#007399" size="8px">uantum Jobs</font></p>
+</div>
+
+<div class="topnav">
+    <a href="#"><b>Home</b></a>
+    <a href="#"><b>Jobs</b></a>
+    <a href="#"><b>About</b></a>
+</div>
+
+<div class="row">
+  <div class="column side">
+    <h2></h2>
+    <p></p>
+  </div>
+
+  <div class="column middle">
+       {% block content %}
+
+       {% endblock %}
+    </div>
+
+
+</div>
+</body>
+<script>
+    $("#profileImage").click(function(e) {
+    $("#imageUpload").click();
+});
+
+function fasterPreview( uploader ) {
+    if ( uploader.files && uploader.files[0] ){
+          $('#profileImage').attr('src',
+             window.URL.createObjectURL(uploader.files[0]) );
+    }
+}
+
+$("#imageUpload").change(function(){
+    fasterPreview( this );
+});
+</script>
+</html>

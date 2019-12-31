@@ -37,7 +37,8 @@ urlpatterns = [
     path('registertable/', views.reg_table),
     path('resumetable/', views.res_table),
     path('logintable/', views.log_table),
-    path('upload', views.upload)
+    path('upload', views.upload),
+    path('layout', views.layout),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.core.files.storage import FileSystemStorage
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
@@ -6,6 +7,10 @@ from jobs.models import *
 import json
 from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
+
+
+def layout(request):
+    return render(request, "layout.html")
 
 
 """json"""
@@ -159,12 +164,15 @@ def resume(request):
 
 
 def upload(request):
+    import os
     if request.method == 'POST' and request.FILES['myfile']:
         myfile = request.FILES['myfile']
+        ext = os.path.splitext(myfile.name)[1]
+        valid_extensions = ['.pdf', '.doc', '.docx']
+        if ext not in valid_extensions:
+            return HttpResponse("The file is not supported")
         fs = FileSystemStorage()
         filename = fs.save(myfile.name, myfile)
         upload_file = fs.url(filename)
-        return render(request, 'file upload.html', {
-            'upload': upload_file
-        })
+        return render(request, 'file upload.html', {'upload': upload_file})
     return render(request, 'file upload.html')
